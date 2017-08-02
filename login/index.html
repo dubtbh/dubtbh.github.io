@@ -2,34 +2,10 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="../server.css">
+    <link rel="stylesheet" href="../dubTBH.css">
     <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
-    <script>
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyDswph-PsDgkJl0F7uun6ka3p6JBIP38g8",
-            authDomain: "dubtbh-6b0d9.firebaseapp.com",
-            databaseURL: "https://dubtbh-6b0d9.firebaseio.com",
-            projectId: "dubtbh-6b0d9",
-            storageBucket: "dubtbh-6b0d9.appspot.com",
-            messagingSenderId: "348480340889"
-        };
-        firebase.initializeApp(config);
-    </script>
     <script src="https://cdn.firebase.com/libs/firebaseui/2.3.0/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.3.0/firebaseui.css" />
-    <script type="text/javascript">
-        // FirebaseUI config.
-        var uiConfig = {
-            signInSuccessUrl: '../read',
-            signInOptions: [
-                firebase.auth.PhoneAuthProvider.PROVIDER_ID
-            ]
-        };
-        var ui = new firebaseui.auth.AuthUI(firebase.auth());
-        ui.start('#firebaseui-auth-container', uiConfig);
-    </script>
-
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.3.0/firebaseui.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
@@ -44,12 +20,5 @@
         <div id="firebaseui-auth-container"></div>
     </div>
 </body>
-<script>
-    firebase.auth().onAuthStateChanged(function(user) {
-        if(user) {
-            location.assign("../readTBHs");
-        }
-    });
-</script>
-
+  <script src="./login.js"></script>
 </html>
