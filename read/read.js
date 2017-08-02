@@ -7,8 +7,9 @@
     storageBucket: "dubtbh-6b0d9.appspot.com",
     messagingSenderId: "348480340889"
   });
-  var template = '<li data-tbh=%ID%><div class=tbhControls><a href="javascript:toggleLikeTBH(\'%ID%\')" class="liked%LIKED%"><i class="fa fa-heart" aria-hidden="true"></i></a><a href="javascript:deleteTBH(\'%ID%\')"><i class="fa fa-trash" aria-hidden="true"></i></a></div><div class=liDataEqual><div class=liData><span class=tbhLabel>Name:</span><p class=tbhName>%NAME%</p><span class=tbhLabel>Text:</span><p class=tbhText>%TEXT%</div><details><summary>In-Depth Data</summary><div class=liData><span class=tbhLabel>Connection:</span><div class=liDataEqual>%CONNECTION%</div><span class=tbhLabel>Language:</span><div class=liDataEqual>%LANGUAGE%</div><span class=tbhLabel>User-Agent:</span><div class=liDataEqual>%USERAGENT%</div><span class=tbhLabel>Vendor:</span><div class=liDataEqual>%VENDOR%</div></div></details></div>';
+  var template = '<li data-tbh=%ID%><div class=tbhControls><a href="javascript:toggleLikeTBH(\'%ID%\')" class="liked%LIKED%"><i class="fa fa-heart" aria-hidden="true"></i></a><a href="javascript:deleteTBH(\'%ID%\')"><i class="fa fa-trash" aria-hidden="true"></i></a></div><div class=liDataEqual><div class=liData><span class=tbhLabel>Name:</span><p class=tbhName>%NAME%</p><span class=tbhLabel>Text:</span><p class=tbhText>%TEXT%</div><details><summary>In-Depth Data</summary><span class=tbhLabel>Connection:</span><div class=detail>%CONNECTION%</div><span class=tbhLabel>Language:</span><div class=detail>%LANGUAGE%</div><span class=tbhLabel>User-Agent:</span><div class=detail>%USERAGENT%</div><span class=tbhLabel>Vendor:</span><div class=detail>%VENDOR%</div></div></details></div>';
   var auth = firebase.auth();
+  var $tbhList = document.getElementById("tbhList");
   auth.onAuthStateChanged(function(user) {
     if(!user) {
       return location.assign("../login");
@@ -23,6 +24,9 @@
       loadUserPath(userPath);
     });
   });
+  var emptyState = function() {
+    $tbhList.innerHTML = "<li class='emptyContainer'><img src='./tbhsEmptyState.svg' class='emptyState'></li>"
+  }
   var escape = function(string) {
     var el = document.createElement('span');
     el.innerText = string;
@@ -31,7 +35,6 @@
   var loadUserPath = function(path) {
     var tbhPath = firebase.database().ref("tbhContent/" + path);
     tbhPath.on("value", function(snapshot) {
-      var $tbhList = document.getElementById("tbhList");
       $tbhList.innerHTML = "";
       var tbhs = snapshot.val();
       window.toggleLikeTBH = function(id) {
@@ -45,6 +48,9 @@
         var path = tbhPath.child(id);
         path.set(null);
       };
+      if(!tbhs || Object.keys(tbhs).length == 0) {
+        return emptyState();
+      }
       for(var tbh_ in tbhs) {
         var tbh = tbhs[tbh_],
           id = tbh_,
