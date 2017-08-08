@@ -126,7 +126,8 @@ details {
 }
 ol.form>li {
   display:flex;
+  text-align:center;
 }
-ol.form>li>input {
+ol.form>li>input[type="text"] {
   flex:1;
 }
