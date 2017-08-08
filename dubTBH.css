@@ -124,3 +124,9 @@ details {
   width:100%;
   flex:1;
 }
+ol.form>li {
+  display:flex;
+}
+ol.form>li>input {
+  flex:1;
+}
